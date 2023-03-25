@@ -10,7 +10,7 @@ function isLoggedIn(req, res, next) {
   return req.user ? next() : res.sendStatus(401);
 }
 
-const port = 4000;
+const port = 8080;
 const distPath = path.resolve(__dirname, '..', 'dist');
 
 const app = express();
@@ -51,6 +51,6 @@ app.get('/protected', isLoggedIn, (req, res) => {
 
 app.listen(port, () => {
   console.log(`
-  Listening at: http://127.0.0.1:${port}
+  Listening at PORT:${port}
   `);
 });
