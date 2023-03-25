@@ -14,7 +14,7 @@ const port = 4000;
 const distPath = path.resolve(__dirname, '..', 'dist');
 
 const app = express();
-app.use(session({ secret: 'cats' })); // source from env later
+app.use(session({ secret: 'cats' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
