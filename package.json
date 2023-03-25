@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && webpack",
-    "start": "nodemon server",
+    "start": "node server",
     "seed": "node server/db/seed.js",
     "dev": "rimraf dist && concurrently \"npm run build\" \"npm start\" -n webpack,server -c #55C3FF,#FFCA28",
     "devServer": "rimraf dist && cross-env HMR=true nodemon --watch client --watch server  server",

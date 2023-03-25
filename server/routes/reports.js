@@ -13,8 +13,7 @@ Reports.get('/', (req, res) => {
       res.send(reports);
     })
     // If not, 500 status code + log the error
-    .catch((err) => {
-      console.log('Failed to GET all reports:', err);
+    .catch(() => {
       res.sendStatus(500);
     });
 });
@@ -26,8 +25,7 @@ Reports.post('/', (req, res) => {
     .then((data) => {
       res.status(201).send(data);
     })
-    .catch((err) => {
-      console.error('Failed to POST to /api/reports', err);
+    .catch(() => {
       res.sendStatus(500);
     });
 });
