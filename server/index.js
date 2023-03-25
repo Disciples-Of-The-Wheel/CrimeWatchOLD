@@ -36,7 +36,7 @@ app.get(
 app.get(
   '/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/protected',
+    successRedirect: '/',
     failureRedirect: '/auth/failure',
   }),
 );
@@ -45,7 +45,7 @@ app.get('/auth/failure', (req, res) => {
   res.send('something went wrong');
 });
 
-app.get('/protected', isLoggedIn, (req, res) => {
+app.get('/', isLoggedIn, (req, res) => {
   res.send('hello');
 });
 
