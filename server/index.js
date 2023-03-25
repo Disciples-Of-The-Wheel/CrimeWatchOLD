@@ -4,11 +4,8 @@ const session = require('express-session');
 const passport = require('passport');
 const Dev = require('../.ds');
 const { Reports } = require('./routes/reports');
-require('./routes/auth');
-
-function isLoggedIn(req, res, next) {
-  return req.user ? next() : res.sendStatus(401);
-}
+const { Auth } = require('./routes/auth');
+require('./strategy');
 
 const port = 8080;
 const distPath = path.resolve(__dirname, '..', 'dist');
@@ -23,31 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(distPath));
 app.use(Dev());
 app.use('/api/reports', Reports);
-
-app.get('/signup', (req, res) => {
-  res.send('<a href="/auth/google">Authenticate with Google</a>');
-});
-
-app.get(
-  '/auth/google',
-  passport.authenticate('google', { scope: ['email', 'profile'] }),
-);
-
-app.get(
-  '/google/callback',
-  passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/auth/failure',
-  }),
-);
-
-app.get('/auth/failure', (req, res) => {
-  res.send('something went wrong');
-});
-
-app.get('/', isLoggedIn, (req, res) => {
-  res.send('hello');
-});
+app.use('/', Auth);
 
 app.listen(port, () => {
   console.log(`
