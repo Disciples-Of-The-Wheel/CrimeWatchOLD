@@ -1,22 +1,37 @@
-require('dotenv').config();
+const { Router } = require('express');
 const passport = require('passport');
 
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const Auth = Router();
 
-passport.use(new GoogleStrategy(
-  {
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:8080/google/callback',
-    // callbackURL: 'http://ec2-3-135-195-99.us-east-2.compute.amazonaws.com:8080/google/callback',
-  },
-  ((accessToken, refreshToken, profile, cb) => cb(null, profile)),
-));
+function isLoggedIn(req, res, next) {
+  return req.user ? next() : res.sendStatus(401);
+}
 
-passport.serializeUser((user, cb) => {
-  cb(null, user);
+Auth.get('/signin', (req, res) => {
+  res.send('<a href="/auth/google">Authenticate with Google</a>');
 });
 
-passport.deserializeUser((user, cb) => {
-  cb(null, user);
+Auth.get(
+  '/auth/google',
+  passport.authenticate('google', { scope: ['email', 'profile'] }),
+);
+
+Auth.get(
+  '/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/auth/failure',
+  }),
+);
+
+Auth.get('/auth/failure', (req, res) => {
+  res.send('something went wrong');
 });
+
+Auth.get('/', isLoggedIn, (req, res) => {
+  res.send('hello');
+});
+
+module.exports = {
+  Auth,
+};
