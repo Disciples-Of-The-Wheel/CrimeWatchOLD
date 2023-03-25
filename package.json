@@ -49,14 +49,15 @@
   },
   "dependencies": {
     "axios": "^0.27.2",
+    "dotenv": "^16.0.3",
     "express": "^4.17.1",
     "express-session": "^1.17.3",
     "mongoose": "^6.4.3",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sequelize": "^6.30.0",
     "mysql2": "^3.2.0",
     "passport": "^0.6.0",
-    "passport-google-oauth20": "^2.0.0"
+    "passport-google-oauth20": "^2.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "sequelize": "^6.30.0"
   }
 }
