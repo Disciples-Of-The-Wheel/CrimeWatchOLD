@@ -14,15 +14,14 @@ const port = 4000;
 const distPath = path.resolve(__dirname, '..', 'dist');
 
 const app = express();
-app.use(session({ secret: 'cats' })); // source from env later
+app.use(session({ secret: 'cats' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Middleware - every request runs thru this middleware
-app.use(express.json()); // Parse the request body
-app.use(express.urlencoded({ extended: true })); // Parses url
-app.use(express.static(distPath)); // Statically serve up client directory
-app.use(Dev()); // Dev middleware - do not move
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(distPath));
+app.use(Dev());
 app.use('/api/reports', Reports);
 
 app.get('/signup', (req, res) => {
